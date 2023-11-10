@@ -45,6 +45,7 @@ def run(start_mode):
     start_mode.init()
 
     global frame_time
+    global frame_rate
     frame_time = 0.0
     current_time = time.time()
     while running:

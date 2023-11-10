@@ -20,6 +20,8 @@ class Idle:
 	@staticmethod
 	def enter(car, e):
 		print('Idle')
+		car.sim.engine.torque = 0.0
+		car.acc = 0.0
 		pass
 
 	@staticmethod
@@ -31,15 +33,19 @@ class Idle:
 
 	@staticmethod
 	def do(car):
-		pass
+		car.sim.engine.rpm -= 500 * game_framework.frame_time
+		car.sim.engine.rpm = max(car.sim.engine.rpm, 850)
+		car.speed -= 1 * game_framework.frame_time
+		car.speed = max(car.speed, 0)
 
 	@staticmethod
-	def draw(car, e):
+	def draw(car):
 		pass
 
 class Drive:
 	@staticmethod
 	def enter(car, e):
+		car.timer = get_time()
 		print('drive')
 		pass
 
@@ -52,10 +58,17 @@ class Drive:
 
 	@staticmethod
 	def do(car):
-		pass
+		car.sim.engine.rpm += (car.sim.engine.max_rpm / game_framework.frame_rate) * game_framework.frame_time							# 차량 업그레이드시 이 rpm 가중치를 올려주면 좋을듯함
+		car.sim.engine.rpm = min(car.sim.engine.rpm, car.sim.engine.max_rpm)
+		car.sim.get_torque()
+		car.eval_speed()
+		car.speed = min(car.speed, car.max_speed)
+		if car.speed >= 100.0:
+			to100 = get_time()
+			print('0-100', to100 - car.timer)
 
 	@staticmethod
-	def draw(car, e):
+	def draw(car):
 		pass
 
 
@@ -65,7 +78,7 @@ class StateMachine:
 		self.cur_state = Idle
 		self.transitions = {
 			Idle: {space_down: Drive, up_down: Idle, down_down: Idle },	# up_down시 변속
-			Drive: {space_up: Idle, up_down: Drive, down_down: Idle}
+			Drive: {space_up: Idle, up_down: Drive, down_down: Drive}
 		}
 
 	def start(self):
@@ -89,6 +102,7 @@ class StateMachine:
 
 class Car:
 	def __init__(self, x = 50, y = 90):
+		self.timer = None
 		self.x, self.y = x, y
 		self.body = None
 		self.driver = None
@@ -97,13 +111,19 @@ class Car:
 		self.wheelRadius = 0.0
 		self.sim = Simulator(self)
 		self.speed = 0.0
+		self.max_speed = 99999999
 		self.acc = 0.0
-		self.weight = 0.0
+		self.weight = 1470 * 0.10197	# kg to Newton
+		self.diff_ratio = 3.62
+		self.aerodynamics = 0.32
+		self.frontal_area = 2.07
 		self.state_machine = StateMachine(self)
 		self.state_machine.start()
 
+		self.accmeter = load_font('ENCR10B.TTF', 16)
 		self.speedometer = load_font('ENCR10B.TTF', 16)
 		self.rpmmeter = load_font('ENCR10B.TTF', 16)
+		self.torquemeter = load_font('ENCR10B.TTF', 16)
 
 		self.SPEED_PER_PPS = lambda e: ((self.speed * 1000 / 60.0) / 60.0) * PIXEL_PER_METER
 	def update(self):
@@ -113,8 +133,14 @@ class Car:
 		self.state_machine.handle_event(('INPUT', event))
 
 	def eval_speed(self):
-		pass
+		if game_framework.frame_time != 0:
+			self.acc = (self.sim.engine.torque * self.sim.mission.ratio[self.sim.mission.gear] * self.diff_ratio) / self.weight
+			self.speed += self.acc * game_framework.frame_time
 
 	def draw(self):
-		pass
+		self.state_machine.draw()
 
+		self.accmeter.draw(400, 300, f'acc: {self.acc}', (255,255,0))
+		self.speedometer.draw(400, 250, f'speed: {self.speed}', (255,255,0))
+		self.rpmmeter.draw(400, 200, f'rpm: {self.sim.engine.rpm}', (255,255,0))
+		self.torquemeter.draw(400, 150, f'torque: {self.sim.engine.torque}', (255,255,0))
