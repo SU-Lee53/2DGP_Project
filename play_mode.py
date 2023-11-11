@@ -5,7 +5,7 @@ import game_framework
 import game_world
 from Car import Car
 from Strip import Strip
-
+import car_types
 
 def handle_events():
 	events = get_events()
@@ -22,11 +22,12 @@ def init():
 	global strip
 	global car
 
-	strip = Strip()
+	car = Car(car_types.M3)
+	game_world.add_object(car, 1)
+
+	strip = Strip(car)
 	game_world.add_object(strip, 0)
 
-	car = Car()
-	game_world.add_object(car, 1)
 
 
 

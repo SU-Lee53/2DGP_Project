@@ -5,25 +5,25 @@ import game_framework
 
 
 class Mission:
-	def __init__(self):
+	def __init__(self, ratio):
 		self.gear = 1  # in game 0 == in real R
-		self.ratio = (0.0, 4.23, 2.53, 1.67, 1.23, 1.0, 0.83)	# 기어비: 바퀴1번 회전당 엔진 회전수, 앞으로 수정 예정
+		self.ratio = ratio	# 기어비: 바퀴1번 회전당 엔진 회전수, 앞으로 수정 예정
 		self.max_gear = 6
 
 class Engine:
-	def __init__(self, r = 8000, t = 365):
+	def __init__(self, max_rpm, max_torque):
 		self.rpm = 800			# 일반적인 차량의 기본 아이들링 RPM은 600~800
 		self.torque = 0.0
-		self.max_rpm = r
-		self.max_torque = t
-		self.temperature = 0
+		self.max_rpm = max_rpm
+		self.max_torque = max_torque
+		self.temperature = 0.0
 
 
 class Simulator:
 	def __init__(self, car):
 		self.car = car
-		self.mission = Mission()
-		self.engine = Engine()
+		self.mission = Mission(self.car.car_type.ratio)
+		self.engine = Engine(self.car.car_type.max_rpm, self.car.car_type.max_torque)
 
 	def gear_up(self):
 		print('gear up')
