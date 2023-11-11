@@ -20,4 +20,4 @@ class Strip:
 		self.animation.clip_draw(self.anim_frame + 100, 0, 100, 100, 300, 100, 200, 100)
 		self.animation.clip_draw(self.anim_frame + 200, 0, 100, 100, 500, 100, 200, 100)
 		self.animation.clip_draw(self.anim_frame + 300, 0, 100, 100, 700, 100, 200, 100)
-		draw_rectangle(0, 100 - 100, 800, 100 + 100)
+		# draw_rectangle(0, 100 - 100, 800, 100 + 100)
