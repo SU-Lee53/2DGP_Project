@@ -45,23 +45,23 @@ def finish():
 
 def update():
 	if player.sim.engine.rpm > player.sim.engine.max_rpm:
-		player.race_result = False
-		player.fail_statement = 'Engine Blow'
-		game_framework.push_mode(result_mode)
+		result_mode.race_result = False
+		result_mode.fail_statement = 'Engine Blow'
+		game_framework.change_mode(result_mode)
 
 	if player.sim.engine.temperature >= 100:
-		player.race_result = False
-		player.fail_statement = 'Engine Overheating'
-		game_framework.push_mode(result_mode)
+		result_mode.race_result = False
+		result_mode.fail_statement = 'Engine Overheating'
+		game_framework.change_mode(result_mode)
 
 	if player.move_distance > 5.0 and get_time() - start_time <= 3.0:
-		player.race_result = False
-		player.fail_statement = 'False Start'
-		game_framework.push_mode(result_mode)
+		result_mode.race_result = False
+		result_mode.fail_statement = 'False Start'
+		game_framework.change_mode(result_mode)
 
 	if player.move_distance >= 500.0:
-		player.race_result = True
-		game_framework.push_mode(result_mode)
+		result_mode.race_result = True
+		game_framework.change_mode(result_mode)
 
 	game_world.update()
 	game_world.handle_collisions()
