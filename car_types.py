@@ -1,4 +1,4 @@
-
+import game_framework
 from pico2d import load_image
 
 # 필요한 차량 고유 요소들을 차량 종류에 따라 모음.
@@ -27,8 +27,13 @@ class M3:
 		self.ratio = (0.0, 4.23, 2.53, 1.67, 1.23, 1.0, 0.83)
 		self.max_rpm = 8000
 		self.max_torque = 365
-
-	def draw(self):
-		self.image.draw(400,200)
-		self.front_wheel.draw(556,148, 70, 70)
-		self.rear_wheel.draw(270,148, 70, 70)
+		self.wheel_radius = 0.45 / 2
+		self.wheel_rotation = 0.0
+		self.front_wheel_x = 93
+		self.front_wheel_y = -30
+		self.rear_wheel_x = -77
+		self.rear_wheel_y = -30
+	def draw(self, x, y):
+		self.image.draw(x, y, 270, 72)
+		self.front_wheel.clip_composite_draw(0, 0, 86, 86, self.wheel_rotation, '', x + self.front_wheel_x, y + self.front_wheel_y, 40, 40)
+		self.rear_wheel.clip_composite_draw(0, 0, 86, 86, self.wheel_rotation, '',  x + self.rear_wheel_x, y + self.rear_wheel_y, 40, 40)

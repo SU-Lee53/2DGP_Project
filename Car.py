@@ -15,9 +15,6 @@ def space_down(e):
 def space_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_SPACE
 
-# 800픽셀이 5미터
-PIXEL_PER_METER = (800.0 / 3)
-
 
 class Idle:
 	@staticmethod
@@ -38,13 +35,15 @@ class Idle:
 	def do(car):
 		car.sim.engine.rpm -= 300 * car.sim.mission.ratio[car.sim.mission.gear] * game_framework.frame_time
 		car.sim.engine.rpm = max(car.sim.engine.rpm, 850)
+		car.prev_speed = car.speed
 		car.speed -= 10 * game_framework.frame_time
 		car.speed = max(car.speed, 0)
+		car.eval_wheel_rotation()
 		car.move_distance += car.speed * game_framework.frame_time
 
 	@staticmethod
 	def draw(car):
-		car.car_type.draw()
+		car.car_type.draw(car.x, car.y)
 
 class Drive:
 	@staticmethod
@@ -64,12 +63,14 @@ class Drive:
 		car.sim.engine.rpm += car.car_type.rpm_raise * car.sim.mission.ratio[car.sim.mission.gear] * game_framework.frame_time							# 차량 업그레이드시 이 rpm 가중치를 올려주면 좋을듯함
 		car.sim.engine.rpm = min(car.sim.engine.rpm, car.sim.engine.max_rpm)
 		car.sim.get_torque()
+		car.prev_speed = car.speed
 		car.eval_speed()
+		car.eval_wheel_rotation()
 		car.move_distance += car.speed * game_framework.frame_time
 
 	@staticmethod
 	def draw(car):
-		car.car_type.draw()
+		car.car_type.draw(car.x, car.y)
 
 
 class StateMachine:
@@ -101,10 +102,11 @@ class StateMachine:
 		self.cur_state.draw(self.car)
 
 class Car:
-	def __init__(self, type, x = 50, y = 90,):
+	def __init__(self, type, x = 150, y = 90,):
 		self.x, self.y = x, y
 		self.car_type = type()
 		self.speed = 0.0
+		self.prev_speed = 0.0			# 이전 프레임에서의 속도 -> 바퀴 회전수를 구하기 위함
 		self.acc = 0.0
 		self.move_distance = 0.0
 		self.dist_per_pixel = 0.0
@@ -128,6 +130,14 @@ class Car:
 			self.acc = (self.sim.engine.torque * self.sim.mission.ratio[self.sim.mission.gear] * self.car_type.diff_ratio) / self.car_type.weight
 			self.speed += self.acc * game_framework.frame_time
 
+	def eval_wheel_rotation(self):
+		if self.prev_speed != 0.0 and self.state_machine.cur_state == Drive:
+			self.car_type.wheel_rotation += (self.speed * game_framework.frame_time) / (self.car_type.wheel_radius)
+			# self.car_type.wheel_rotation = (self.move_distance * (2 * 3.141592) / self.car_type.wheel_radius**2 * 3.142592) * (self.speed / self.prev_speed)
+		elif self.prev_speed != 0.0 and self.state_machine.cur_state == Idle:
+			self.car_type.wheel_rotation -= (self.speed * game_framework.frame_time) / (self.car_type.wheel_radius)
+		elif self.prev_speed == 0.0:
+			self.car_type.wheel_rotation = 0.0
 	def get_pps(self):
 		self.SPEED_PER_PPS = ((self.speed * 1000 / 60.0) / 60.0) * PIXEL_PER_METER
 
@@ -138,5 +148,6 @@ class Car:
 		self.accmeter.draw(0, 10, f'acc: {self.acc: .2f}', (255,255,0))
 		self.speedometer.draw(200, 10, f'speed: {self.speed: .2f}', (255,255,0))
 		self.speedometer.draw(200, 30, f'distance: {self.move_distance: .2f}', (255,255,0))
+		self.speedometer.draw(400, 30, f'wheel: {self.car_type.wheel_rotation: .2f}', (255,255,0))
 		self.rpmmeter.draw(400, 10, f'rpm: {self.sim.engine.rpm : .2f}', (255,255,0))
 		self.torquemeter.draw(600, 10, f'torque: {self.sim.engine.torque: .2f}', (255,255,0))
