@@ -5,10 +5,10 @@ import game_framework
 
 
 class Mission:
-	def __init__(self, ratio):
+	def __init__(self, ratio, max_gear):
 		self.gear = 1  # in game 0 == in real R
 		self.ratio = ratio	# 기어비: 바퀴1번 회전당 엔진 회전수, 앞으로 수정 예정
-		self.max_gear = 6
+		self.max_gear = max_gear
 
 class Engine:
 	def __init__(self, max_rpm, max_torque):
@@ -22,7 +22,7 @@ class Engine:
 class Simulator:
 	def __init__(self, car):
 		self.car = car
-		self.mission = Mission(self.car.car_type.ratio)
+		self.mission = Mission(self.car.car_type.ratio, self.car.car_type.max_gear)
 		self.engine = Engine(self.car.car_type.max_rpm, self.car.car_type.max_torque)
 
 	def gear_up(self):

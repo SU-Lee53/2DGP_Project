@@ -22,7 +22,7 @@ def init():
 	global strip
 	global car
 
-	car = Car(car_types.M3)
+	car = Car(car_types.Murcielago)
 	game_world.add_object(car, 1)
 
 	strip = Strip(car)

@@ -4,6 +4,9 @@ from pico2d import *
 from Simulator import Simulator
 import car_types
 
+PIXEL_PER_METER = (800.0 / 20)
+
+
 from car_types import *
 # 필요한 차량의 상태 -> 정지 or 달림
 def up_down(e):
@@ -149,5 +152,6 @@ class Car:
 		self.speedometer.draw(200, 10, f'speed: {self.speed: .2f}', (255,255,0))
 		self.speedometer.draw(200, 30, f'distance: {self.move_distance: .2f}', (255,255,0))
 		self.speedometer.draw(400, 30, f'wheel: {self.car_type.wheel_rotation: .2f}', (255,255,0))
+		self.speedometer.draw(600, 30, f'gear: {self.sim.mission.gear: .2f}', (255,255,0))
 		self.rpmmeter.draw(400, 10, f'rpm: {self.sim.engine.rpm : .2f}', (255,255,0))
 		self.torquemeter.draw(600, 10, f'torque: {self.sim.engine.torque: .2f}', (255,255,0))
