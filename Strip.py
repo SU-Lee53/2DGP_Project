@@ -2,6 +2,8 @@ import game_world
 import game_framework
 from pico2d import *
 
+import play_mode
+
 PIXEL_PER_METER = (800.0 / 20)
 
 TIME_PER_ACTION = 0.5
@@ -20,18 +22,17 @@ class Strip:
 		self.player = car				# 프레임 움직임의 기준이 되는 속도를 플레이어의 자동차가 갖고있음.
 		self.start_line = load_image('Start_Line.png')
 		self.start_sign = None
-		self.start_time = get_time()
 
 	def update(self):
 		self.crowd_frame = ((self.player.move_distance * PIXEL_PER_METER) + 0.0 * game_framework.frame_time) % 1100
 		self.anim_frame = ((self.player.move_distance * PIXEL_PER_METER) + 0.0 * game_framework.frame_time) % 100
-		if get_time() - self.start_time <= 1.0:
+		if get_time() - play_mode.start_time <= 1.0:
 			self.start_sign = load_image('sign1.png')
-		elif get_time() - self.start_time <= 2.0:
+		elif get_time() - play_mode.start_time <= 2.0:
 			self.start_sign = load_image('sign2.png')
-		elif get_time() - self.start_time <= 3.0:
+		elif get_time() - play_mode.start_time <= 3.0:
 			self.start_sign = load_image('sign3.png')
-		elif get_time() - self.start_time <= 4.0:
+		elif get_time() - play_mode.start_time <= 4.0:
 			self.start_sign = load_image('sign4.png')
 
 	def draw(self):

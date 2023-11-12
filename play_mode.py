@@ -3,9 +3,14 @@ from pico2d import *
 import game_framework
 
 import game_world
-from Car import Car
+import result_mode
 from Strip import Strip
+from car import Car
 import car_types
+
+player = None
+strip = None
+start_time = None
 
 def handle_events():
 	events = get_events()
@@ -15,19 +20,21 @@ def handle_events():
 		elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
 			game_framework.quit()
 		else:
-			car.handle_event(event)
+			player.handle_event(event)
 
 
 def init():
 	global strip
-	global car
+	global player
+	global start_time
 
-	car = Car(car_types.Murcielago)
-	game_world.add_object(car, 1)
+	start_time = get_time()
 
-	strip = Strip(car)
+	player = Car(car_types.M3)
+	game_world.add_object(player, 1)
+
+	strip = Strip(player)
 	game_world.add_object(strip, 0)
-
 
 
 
@@ -37,6 +44,25 @@ def finish():
 
 
 def update():
+	if player.sim.engine.rpm > player.sim.engine.max_rpm:
+		player.race_result = False
+		player.fail_statement = 'Engine Blow'
+		game_framework.push_mode(result_mode)
+
+	if player.sim.engine.temperature >= 100:
+		player.race_result = False
+		player.fail_statement = 'Engine Overheating'
+		game_framework.push_mode(result_mode)
+
+	if player.move_distance > 5.0 and get_time() - start_time <= 3.0:
+		player.race_result = False
+		player.fail_statement = 'False Start'
+		game_framework.push_mode(result_mode)
+
+	if player.move_distance >= 500.0:
+		player.race_result = True
+		game_framework.push_mode(result_mode)
+
 	game_world.update()
 	game_world.handle_collisions()
 

@@ -23,7 +23,7 @@ class M3:
 		self.diff_ratio = 3.62
 		self.aerodynamics = 0.32
 		self.frontal_area = 2.07
-		self.rpm_raise = 2000
+		self.rpm_raise = 800
 		self.ratio = (0.0, 4.23, 2.53, 1.67, 1.23, 1.0, 0.83)
 		self.max_gear = 6
 		self.max_rpm = 8000
@@ -31,10 +31,10 @@ class M3:
 		self.wheel_radius = 0.45 / 2
 
 		self.wheel_rotation = 0.0
-		self.front_wheel_x = 93
-		self.front_wheel_y = -30
-		self.rear_wheel_x = -77
-		self.rear_wheel_y = -30
+		self.front_wheel_x = 91
+		self.front_wheel_y = -27
+		self.rear_wheel_x = -75
+		self.rear_wheel_y = -27
 
 	def draw(self, x, y):
 		self.image.draw(x, y, 270, 72)
@@ -50,7 +50,7 @@ class EK9:
 		self.diff_ratio = 4.40
 		self.aerodynamics = 0.32
 		self.frontal_area = 2.09
-		self.rpm_raise = 800
+		self.rpm_raise = 1000
 		self.ratio = (0.0, 3.23, 2.105, 1.458, 1.107, 1.0, 0.83)
 		self.max_gear = 4
 		self.max_rpm = 9000
@@ -137,7 +137,7 @@ class CLK:
 		self.diff_ratio = 2.65
 		self.aerodynamics = 0.28
 		self.frontal_area = 2.44
-		self.rpm_raise = 800
+		self.rpm_raise = 700
 		self.ratio = (0.0, 4.38, 2.86, 1.92, 1.35, 1.00, 0.87, 0.73)
 		self.max_gear = 7
 		self.max_rpm = 7500
@@ -167,7 +167,7 @@ class Murcielago:
 		self.diff_ratio = 2.53
 		self.aerodynamics = 0.33
 		self.frontal_area = 2.53
-		self.rpm_raise = 1000
+		self.rpm_raise = 600
 		self.ratio = (0.0, 3.09, 2.10, 1.56, 1.24, 1.06, 0.93)
 		self.max_gear = 6
 		self.max_rpm = 8000

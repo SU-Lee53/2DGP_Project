@@ -1,8 +1,10 @@
 from pico2d import *
+
+import car
 # 차량 구동계 시뮬레이션
 import game_framework
 
-
+PIXEL_PER_METER = (800.0 / 20)
 
 class Mission:
 	def __init__(self, ratio, max_gear):
@@ -16,7 +18,7 @@ class Engine:
 		self.torque = 0.0
 		self.max_rpm = max_rpm
 		self.max_torque = max_torque
-		self.temperature = 0.0
+		self.temperature = 50
 
 
 class Simulator:
@@ -49,3 +51,19 @@ class Simulator:
 		dragForce = -0.5 * self.car.aerodynamics * self.car.frontal_area * self.car.speed ** 2
 		return dragForce
 
+
+	def eval_speed(self):
+		if game_framework.frame_time != 0:
+			self.car.acc = (self.engine.torque * self.mission.ratio[self.mission.gear] * self.car.car_type.diff_ratio) / self.car.car_type.weight
+			self.car.speed += self.car.acc * game_framework.frame_time
+
+	def eval_wheel_rotation(self):
+		if self.car.prev_speed != 0.0 and self.car.state_machine.cur_state == car.Drive:
+			self.car.car_type.wheel_rotation += (self.car.speed * game_framework.frame_time) / (self.car.car_type.wheel_radius)
+			# self.car_type.wheel_rotation = (self.move_distance * (2 * 3.141592) / self.car_type.wheel_radius**2 * 3.142592) * (self.speed / self.prev_speed)
+		elif self.car.prev_speed != 0.0 and self.car.state_machine.cur_state == car.Idle:
+			self.car.car_type.wheel_rotation -= (self.car.speed * game_framework.frame_time) / (self.car.car_type.wheel_radius)
+		elif self.car.prev_speed == 0.0:
+			self.car.car_type.wheel_rotation = 0.0
+	def get_pps(self):
+		self.SPEED_PER_PPS = ((self.car.speed * 1000 / 60.0) / 60.0) * PIXEL_PER_METER
