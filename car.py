@@ -131,10 +131,6 @@ class Car:
 		self.state_machine = StateMachine(self)
 		self.state_machine.start()
 
-		self.race_result = None
-		self.fail_statement = 'None'
-
-
 
 	def update(self):
 			self.state_machine.update()
@@ -146,7 +142,6 @@ class Car:
 
 	def draw(self):
 		self.state_machine.draw()
-
 
 		self.state_show.draw(0, 10, f'acc: {self.acc: .2f}', (255,255,0))
 		self.state_show.draw(200, 10, f'speed: {self.speed: .2f}', (255,255,0))
