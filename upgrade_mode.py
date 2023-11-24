@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
-
+from upgrade import Upgrader
+from play_mode import player
 import game_world
 
 
@@ -12,14 +13,15 @@ def handle_events():
 		elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
 			game_framework.quit()
 		else:
-			pass
+			upgrade.handle_event(event)
 
 
 
 def init():
-	global upgrade_ui
-	upgrade_ui = load_image('UpgradeUI.png')
-	game_world.add_object(upgrade_ui)
+	global upgrade
+	upgrade = Upgrader(player)
+	game_world.add_object(upgrade)
+
 
 
 def finish():

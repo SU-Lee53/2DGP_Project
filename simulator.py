@@ -26,6 +26,8 @@ class Simulator:
 		self.car = car
 		self.mission = Mission(self.car.car_type.ratio, self.car.car_type.max_gear)
 		self.engine = Engine(self.car.car_type.max_rpm, self.car.car_type.max_torque)
+		self.nitro = False
+		self.turbo = False
 
 	def gear_up(self):
 		print('gear up')
