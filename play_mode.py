@@ -3,6 +3,7 @@ import game_framework
 
 import game_world
 import result_mode
+import upgrade_mode
 from Strip import Strip
 from car import Car
 import car_types
@@ -16,6 +17,8 @@ def handle_events():
 	for event in events:
 		if event.type == SDL_QUIT:
 			game_framework.quit()
+		elif event.type == SDL_KEYDOWN and event.key == SDLK_0:
+			game_framework.change_mode(upgrade_mode)
 		elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
 			game_framework.quit()
 		else:
@@ -26,6 +29,7 @@ def init():
 	global strip
 	global player
 	global start_time
+	global reward
 
 	start_time = get_time()
 
@@ -35,6 +39,7 @@ def init():
 	strip = Strip(player)
 	game_world.add_object(strip, 0)
 
+	reward = 2000
 
 
 def finish():

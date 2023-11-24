@@ -35,6 +35,8 @@ def draw():
 	image.draw(400, 300)
 	if race_result is False:
 		statement.draw(300, 250, fail_statement, (255,255,255))
+	else:
+		statement.draw(300, 200, f'reward:{play_mode.reward}', (255,255,255))
 	update_canvas()
 
 

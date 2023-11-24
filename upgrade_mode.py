@@ -1,8 +1,8 @@
 from pico2d import *
 import game_framework
 from upgrade import Upgrader
-from play_mode import player
 import game_world
+import play_mode
 
 
 def handle_events():
@@ -19,7 +19,7 @@ def handle_events():
 
 def init():
 	global upgrade
-	upgrade = Upgrader(player)
+	upgrade = Upgrader(play_mode.player)
 	game_world.add_object(upgrade)
 
 
