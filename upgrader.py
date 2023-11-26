@@ -29,38 +29,43 @@ class Upgrader:
 
 	def handle_event(self, event):
 		if event.type == SDL_KEYDOWN:
-			if event.key == SDLK_1:
+			if event.key == SDLK_1 and self.player.level['block'] <= 5:
 				if self.player.money >= self.price['block']:
 					self.player.level['block'] += 1
 					self.player.money -= self.price['block']
 					self.price['block'] += 500
+					self.player.car.sim.engine.max_rpm += 500
 				else:
 					game_framework.push_mode(warning_mode)
-			elif event.key == SDLK_2:
+			elif event.key == SDLK_2 and self.player.level['filter'] <= 5:
 				if self.player.money >= self.price['filter']:
 					self.player.level['filter'] += 1
 					self.player.money -= self.price['filter']
 					self.price['filter'] += 500
+					self.player.car.car_type.max_temp += 20
 				else:
 					game_framework.push_mode(warning_mode)
-			elif event.key == SDLK_3:
+			elif event.key == SDLK_3 and self.player.level['exhaust'] <= 5:
 				if self.player.money >= self.price['exhaust']:
 					self.player.level['exhaust'] += 1
 					self.player.money -= self.price['exhaust']
 					self.price['exhaust'] += 500
+					self.player.car.car_type.rpm_raise += 50
 				else:
 					game_framework.push_mode(warning_mode)
 			elif event.key == SDLK_4:
 				if self.player.money >= self.price['turbo']:
 					self.player.level['turbo'] = True
 					self.player.money -= self.price['turbo']
+					self.player.car.sim.engine.max_rpm += 2500
+					self.player.car.car_type.rpm_raise += 250
 				else:
 					game_framework.push_mode(warning_mode)
 			elif event.key == SDLK_5:
 				if self.player.money >= self.price['nitro']:
 					self.player.level['nitro'] = True
-					self.player.car.nitro = True
 					self.player.money -= self.price['nitro']
+					self.player.car.nitro = True
 				else:
 					game_framework.push_mode(warning_mode)
 

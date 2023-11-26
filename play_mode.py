@@ -70,21 +70,25 @@ def update():
 	if player.car.sim.engine.rpm > player.car.sim.engine.max_rpm:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Engine Blow'
+		player.money += reward // 5
 		game_framework.change_mode(result_mode)
 
-	if player.car.sim.engine.temperature >= 100:
+	if player.car.sim.engine.temperature >= player.car.car_type.max_temp:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Engine Overheating'
+		player.money += reward // 5
 		game_framework.change_mode(result_mode)
 
 	if player.car.move_distance > 5.0 and get_time() - start_time <= 3.0:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'False Start'
+		player.money += reward // 5
 		game_framework.change_mode(result_mode)
 
 	if opponent.car.move_distance >= strip_length:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Opponent Win'
+		player.money += reward // 5
 		game_framework.change_mode(result_mode)
 
 	if player.car.move_distance >= strip_length:

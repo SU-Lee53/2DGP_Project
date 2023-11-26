@@ -21,7 +21,7 @@ def init():
 	else:
 		image = load_image('./screen/Lose_Screen.png')
 
-	statement = load_font('ENCR10B.TTF', 30)
+	statement = load_font('impact.TTF', 30)
 
 def finish():
 	global image
@@ -35,7 +35,8 @@ def draw():
 	clear_canvas()
 	image.draw(400, 300)
 	if race_result is False:
-		statement.draw(300, 250, fail_statement, (255,255,255))
+		statement.draw(300, 250, f'reward:{play_mode.reward // 5}', (255,255,255))
+		statement.draw(300, 280, fail_statement, (255,255,255))
 	else:
 		statement.draw(300, 200, f'reward:{play_mode.reward}', (255,255,255))
 	update_canvas()

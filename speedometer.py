@@ -34,7 +34,7 @@ class Speedometer:
 	# gage min length = 10
 	# 이 사이로 값을 조정한다
 		self.rpm_length = (((self.player.car.sim.engine.rpm - 850) / (self.player.car.sim.engine.max_rpm - 850)) * 140) + 10
-		self.temp_length = (((self.player.car.sim.engine.temperature - 50) / (100 - 50)) * 140) + 10
+		self.temp_length = (((self.player.car.sim.engine.temperature - 50) / (self.player.car.car_type.max_temp - 50)) * 140) + 10
 		self.nitro_length = (((self.player.car.nitro_gage - 0) / 100 - 0) * 150)
 
 	def draw(self):

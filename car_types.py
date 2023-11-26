@@ -34,6 +34,7 @@ class M3:
 		self.max_gear = 6
 		self.max_rpm = 8000
 		self.max_torque = 365
+		self.max_temp = 100
 		self.wheel_radius = 0.45 / 2
 
 		self.wheel_rotation = 0.0
@@ -65,6 +66,7 @@ class EK9:
 		self.max_gear = 4
 		self.max_rpm = 9000
 		self.max_torque = 163
+		self.max_temp = 100
 		self.wheel_radius = 0.38 / 2
 
 		self.wheel_rotation = 0.0
@@ -95,6 +97,7 @@ class S4:
 		self.max_gear = 6
 		self.max_rpm = 7000
 		self.max_torque = 410
+		self.max_temp = 100
 		self.wheel_radius = 0.45 / 2
 
 		self.wheel_rotation = 0.0
@@ -126,6 +129,7 @@ class RX7:
 		self.max_gear = 5
 		self.max_rpm = 6500
 		self.max_torque = 255
+		self.max_temp = 100
 		self.wheel_radius = 0.40 / 2
 
 		self.wheel_rotation = 0.0
@@ -157,6 +161,7 @@ class CLK:
 		self.max_gear = 7
 		self.max_rpm = 7500
 		self.max_torque = 630
+		self.max_temp = 100
 		self.wheel_radius = 0.48 / 2
 
 		self.wheel_rotation = 0.0
@@ -189,6 +194,7 @@ class Murcielago:
 		self.max_gear = 6
 		self.max_rpm = 8000
 		self.max_torque = 660
+		self.max_temp = 100
 		self.wheel_radius = 0.40 / 2
 
 		self.wheel_rotation = 0.0
