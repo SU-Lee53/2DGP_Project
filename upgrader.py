@@ -1,11 +1,7 @@
 import car_types
-import game_world
 import game_framework
 from pico2d import *
-import play_mode
-import result_mode
 import warning_mode
-from car import Car
 from player import Player
 
 
@@ -14,7 +10,7 @@ class Upgrader:
 	def __init__(self):
 		self.x, self.y = 400, 300
 		self.ui = load_image('./screen/UpgradeUI.png')
-		self.font = load_font('ENCR10B.TTF')
+		self.font = load_font('impact.TTF')
 		self.price = {'block': 1000, 'filter': 1000, 'exhaust': 1500, 'turbo': 3000, 'nitro': 5000}
 		if Upgrader.player is None:
 			Upgrader.player = Player(car_types.M3)
@@ -59,8 +55,6 @@ class Upgrader:
 					self.player.money -= self.price['nitro']
 				else:
 					game_framework.push_mode(warning_mode)
-			elif event.key == SDLK_0:
-				game_framework.change_mode(play_mode)
 
 
 	def draw(self):

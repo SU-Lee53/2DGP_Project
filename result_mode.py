@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import play_mode
+import upgrade_mode
 
 # 패배조건
 # 1. 부정출발
@@ -47,4 +48,4 @@ def handle_events():
 			game_framework.quit()
 		if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
 			game_framework.pop_mode()
-			game_framework.change_mode(play_mode)
+			game_framework.change_mode(upgrade_mode)

@@ -5,10 +5,14 @@ import game_world
 import result_mode
 import upgrade_mode
 from Strip import Strip
+from stage_info import stage_info
 
 player = None
 strip = None
 start_time = None
+stage = 1
+opponent = None
+reward = None
 
 def handle_events():
 	events = get_events()
@@ -27,17 +31,33 @@ def init():
 	global strip
 	global player
 	global start_time
+	global opponent
 	global reward
 
 	start_time = get_time()
 
 	player = upgrade_mode.upgrade.player
+	player.reset()
 	game_world.add_object(player, 1)
 
 	strip = Strip()
 	game_world.add_object(strip, 0)
 
-	reward = 2000
+	match stage:
+		case 1:
+			stage_info.stage1(opponent, reward)
+		case 2:
+			stage_info.stage2(opponent, reward)
+		case 3:
+			stage_info.stage3(opponent, reward)
+		case 4:
+			stage_info.stage4(opponent, reward)
+		case 5:
+			stage_info.stage5(opponent, reward)
+
+	game_world.add_object(opponent)
+
+
 
 
 def finish():
@@ -63,6 +83,7 @@ def update():
 
 	if player.car.move_distance >= 500.0:
 		result_mode.race_result = True
+		player.money += reward
 		game_framework.change_mode(result_mode)
 
 	game_world.update()

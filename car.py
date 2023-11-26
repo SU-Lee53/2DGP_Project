@@ -6,9 +6,6 @@ import result_mode
 from simulator import Simulator
 import car_types
 
-PIXEL_PER_METER = (800.0 / 20)
-
-
 from car_types import *
 # 필요한 차량의 상태 -> 정지 or 달림
 def up_down(e):
@@ -124,8 +121,6 @@ class Car:
 		self.prev_speed = 0.0			# 이전 프레임에서의 속도 -> 바퀴 회전수를 구하기 위함
 		self.acc = 0.0
 		self.move_distance = 0.0
-		self.dist_per_pixel = 0.0
-		self.state_show = load_font('ENCR10B.TTF', 16)
 
 		self.sim = Simulator(self)
 		self.state_machine = StateMachine(self)
@@ -143,11 +138,3 @@ class Car:
 	def draw(self):
 		self.state_machine.draw()
 
-		self.state_show.draw(0, 10, f'acc: {self.acc: .2f}', (255,255,0))
-		self.state_show.draw(200, 10, f'speed: {self.speed: .2f}', (255,255,0))
-		self.state_show.draw(400, 10, f'rpm: {self.sim.engine.rpm : .2f}', (255,255,0))
-		self.state_show.draw(600, 10, f'torque: {self.sim.engine.torque: .2f}', (255,255,0))
-		self.state_show.draw(000, 30, f'temp: {self.sim.engine.temperature: .2f}', (255,255,0))
-		self.state_show.draw(200, 30, f'distance: {self.move_distance: .2f}', (255,255,0))
-		self.state_show.draw(400, 30, f'wheel: {self.car_type.wheel_rotation: .2f}', (255,255,0))
-		self.state_show.draw(600, 30, f'gear: {self.sim.mission.gear: .2f}', (255,255,0))

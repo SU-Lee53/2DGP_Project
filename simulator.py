@@ -4,7 +4,6 @@ import car
 # 차량 구동계 시뮬레이션
 import game_framework
 
-PIXEL_PER_METER = (800.0 / 20)
 
 class Mission:
 	def __init__(self, ratio, max_gear):
@@ -69,3 +68,9 @@ class Simulator:
 			self.car.car_type.wheel_rotation = 0.0
 	def get_pps(self):
 		self.SPEED_PER_PPS = ((self.car.speed * 1000 / 60.0) / 60.0) * PIXEL_PER_METER
+
+	def reset(self):
+		self.engine.rpm = 800
+		self.engine.torque = 0.0
+		self.engine.temperature = 50
+		self.mission.gear = 1
