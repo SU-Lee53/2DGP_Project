@@ -14,11 +14,17 @@ from pico2d import load_image
 # self.max_rpm = r
 # self.max_torque = t
 
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 8
+
 class M3:
 	def __init__(self):
 		self.image = load_image('./car/M3.png')
 		self.front_wheel = load_image('./car/Wheel.png')
 		self.rear_wheel = load_image('./car/Wheel.png')
+		self.nitro = load_image('./car/nitro.png')
+		self.nitro_frame = 0
 		self.weight = 1470 * 0.10197	# kg to Newton
 		self.diff_ratio = 3.62
 		self.aerodynamics = 0.32
@@ -36,16 +42,20 @@ class M3:
 		self.rear_wheel_x = -75
 		self.rear_wheel_y = -27
 
-	def draw(self, x, y):
+	def draw(self, x, y, boost):
 		self.image.draw(x, y, 270, 72)
 		self.front_wheel.clip_composite_draw(0, 0, 86, 86, self.wheel_rotation, '', x + self.front_wheel_x, y + self.front_wheel_y, 40, 40)
 		self.rear_wheel.clip_composite_draw(0, 0, 86, 86, self.wheel_rotation, '',  x + self.rear_wheel_x, y + self.rear_wheel_y, 40, 40)
+		if boost is True:
+			self.nitro.clip_draw(int(self.nitro_frame) * 100, 0, 100, 100, 1, 75, 70, 70)
+			self.nitro_frame = (self.nitro_frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
 
 class EK9:
 	def __init__(self):
 		self.image = load_image('./car/EK9.png')
 		self.front_wheel = load_image('./car/Wheel.png')
 		self.rear_wheel = load_image('./car/Wheel.png')
+		self.nitro = load_image('./car/nitro.png')
 		self.weight = 1073 * 0.10197	# kg to Newton
 		self.diff_ratio = 4.40
 		self.aerodynamics = 0.32
@@ -74,6 +84,8 @@ class S4:
 		self.image = load_image('./car/S4.png')
 		self.front_wheel = load_image('./car/Wheel.png')
 		self.rear_wheel = load_image('./car/Wheel.png')
+		self.nitro = load_image('./car/nitro.png')
+		self.nitro_frame = 0
 		self.weight = 1720 * 0.10197  # kg to Newton
 		self.diff_ratio = 3.54
 		self.aerodynamics = 0.28
@@ -103,6 +115,8 @@ class RX7:
 		self.image = load_image('./car/RX7.png')
 		self.front_wheel = load_image('./car/Wheel.png')
 		self.rear_wheel = load_image('./car/Wheel.png')
+		self.nitro = load_image('./car/nitro.png')
+		self.nitro_frame = 0
 		self.weight = 1310 * 0.10197  # kg to Newton
 		self.diff_ratio = 4.1
 		self.aerodynamics = 0.28
@@ -127,12 +141,13 @@ class RX7:
 		self.rear_wheel.clip_composite_draw(0, 0, 86, 86, self.wheel_rotation, '', x + self.rear_wheel_x,
 																				y + self.rear_wheel_y, 40, 40)
 
-
 class CLK:
 	def __init__(self):
 		self.image = load_image('./car/CLK.png')
 		self.front_wheel = load_image('./car/Wheel.png')
 		self.rear_wheel = load_image('./car/Wheel.png')
+		self.nitro = load_image('./car/nitro.png')
+		self.nitro_frame = 0
 		self.weight = 1310 * 0.10197  # kg to Newton
 		self.diff_ratio = 2.65
 		self.aerodynamics = 0.28
@@ -163,6 +178,8 @@ class Murcielago:
 		self.image = load_image('./car/Murcielago.png')
 		self.front_wheel = load_image('./car/Wheel.png')
 		self.rear_wheel = load_image('./car/Wheel.png')
+		self.nitro = load_image('./car/nitro.png')
+		self.nitro_frame = 0
 		self.weight = 1841 * 0.10197  # kg to Newton
 		self.diff_ratio = 2.53
 		self.aerodynamics = 0.33

@@ -1,7 +1,7 @@
 import game_world
 import game_framework
 from pico2d import *
-from car import Car
+from car import Car, Idle
 import speedometer
 
 
@@ -9,7 +9,7 @@ class Player:
 	def __init__(self, car_type):
 		self.car = Car(car_type)
 		self.level = {'block':1, 'filter':1, 'exhaust':1, 'turbo':False, 'nitro':False}
-		self.money = 2000
+		self.money = 9000
 		self.state_show = load_font('ENCR10B.TTF', 16)
 		self.speedometer = speedometer.Speedometer(self)
 
@@ -34,6 +34,7 @@ class Player:
 		self.state_show.draw(600, 30, f'gear: {self.car.sim.mission.gear: .2f}', (255,255,0))
 
 	def reset(self):
+		self.car.state_machine.cur_state = Idle
 		self.car.speed = 0.0
 		self.car.prev_speed = 0.0
 		self.car.acc = 0.0

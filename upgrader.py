@@ -59,6 +59,7 @@ class Upgrader:
 			elif event.key == SDLK_5:
 				if self.player.money >= self.price['nitro']:
 					self.player.level['nitro'] = True
+					self.player.car.nitro = True
 					self.player.money -= self.price['nitro']
 				else:
 					game_framework.push_mode(warning_mode)
