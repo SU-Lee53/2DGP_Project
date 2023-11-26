@@ -81,6 +81,11 @@ def update():
 		result_mode.fail_statement = 'False Start'
 		game_framework.change_mode(result_mode)
 
+	if opponent.car.move_distance >= 500:
+		result_mode.race_result = False
+		result_mode.fail_statement = 'Opponent Win'
+		game_framework.change_mode(result_mode)
+	
 	if player.car.move_distance >= 500.0:
 		result_mode.race_result = True
 		player.money += reward

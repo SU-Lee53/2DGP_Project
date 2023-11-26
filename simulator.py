@@ -31,18 +31,20 @@ class Simulator:
 	def gear_up(self):
 		print('gear up')
 		if self.mission.gear >= self.mission.max_gear:
-			return
+			return False
 		self.mission.gear += 1
 		self.engine.rpm = self.engine.rpm * (self.mission.ratio[self.mission.gear] / self.mission.ratio[self.mission.gear - 1])
 		print('current gear:', self.mission.gear)
+		return True
 
 	def gear_down(self):
 		print('gear down')
 		if self.mission.gear <= 1:
-			return
+			return False
 		self.mission.gear -= 1
 		self.engine.rpm = self.engine.rpm * (self.mission.ratio[self.mission.gear] / self.mission.ratio[self.mission.gear + 1])
 		print('current gear:', self.mission.gear)
+		return True
 
 	def get_torque(self):
 		self.engine.torque = self.engine.max_torque * (1 - ((self.engine.rpm / self.engine.max_rpm) ** 3))
