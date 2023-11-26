@@ -5,9 +5,6 @@ import game_world
 import result_mode
 import upgrade_mode
 from Strip import Strip
-from car import Car
-import car_types
-from player import Player
 
 player = None
 strip = None
@@ -34,7 +31,7 @@ def init():
 
 	start_time = get_time()
 
-	player = Player(car_types.M3)
+	player = upgrade_mode.upgrade.player
 	game_world.add_object(player, 1)
 
 	strip = Strip()

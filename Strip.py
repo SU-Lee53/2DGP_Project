@@ -14,26 +14,26 @@ ANIM_MOVE_PER_ACTION = 100
 
 class Strip:
 	def __init__(self):
-		self.strip = load_image('Strip.png')
-		self.crowd = load_image('Crowd.png')
-		self.animation = load_image('Run_Animation.png')
+		self.strip = load_image('./env/Strip.png')
+		self.crowd = load_image('./env/Crowd.png')
+		self.animation = load_image('./env/Run_Animation.png')
 		self.crowd_frame = 0
 		self.anim_frame = 0
 		self.player = play_mode.player.car				# 프레임 움직임의 기준이 되는 속도를 플레이어의 자동차가 갖고있음.
-		self.start_line = load_image('Start_Line.png')
+		self.start_line = load_image('./env/Start_Line.png')
 		self.start_sign = None
 
 	def update(self):
 		self.crowd_frame = ((self.player.move_distance * PIXEL_PER_METER) + 0.0 * game_framework.frame_time) % 1100
 		self.anim_frame = ((self.player.move_distance * PIXEL_PER_METER) + 0.0 * game_framework.frame_time) % 100
 		if get_time() - play_mode.start_time <= 1.0:
-			self.start_sign = load_image('sign1.png')
+			self.start_sign = load_image('./env/sign1.png')
 		elif get_time() - play_mode.start_time <= 2.0:
-			self.start_sign = load_image('sign2.png')
+			self.start_sign = load_image('./env/sign2.png')
 		elif get_time() - play_mode.start_time <= 3.0:
-			self.start_sign = load_image('sign3.png')
+			self.start_sign = load_image('./env/sign3.png')
 		elif get_time() - play_mode.start_time <= 4.0:
-			self.start_sign = load_image('sign4.png')
+			self.start_sign = load_image('./env/sign4.png')
 
 	def draw(self):
 		self.strip.clip_draw(10, 0, 800, 250, 400, 150, 800, 300)

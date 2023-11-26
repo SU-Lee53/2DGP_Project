@@ -16,9 +16,9 @@ def init():
 	global statement
 
 	if race_result is True:
-		image = load_image('Win_Screen.png')
+		image = load_image('./screen/Win_Screen.png')
 	else:
-		image = load_image('Lose_Screen.png')
+		image = load_image('./screen/Lose_Screen.png')
 
 	statement = load_font('ENCR10B.TTF', 30)
 

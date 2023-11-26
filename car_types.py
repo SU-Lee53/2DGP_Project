@@ -5,7 +5,7 @@ from pico2d import load_image
 # self.image = load_image('M3.png')
 # self.front_wheel = load_image('Wheel.png')
 # self.rear_wheel = load_image('Wheel.png')
-# self.weight = 1470 * 0.10197  # kg to Newton
+# self.weight = 1470 * 0.10197  # kg to N
 # self.diff_ratio = 3.62
 # self.aerodynamics = 0.32
 # self.frontal_area = 2.07
@@ -16,9 +16,9 @@ from pico2d import load_image
 
 class M3:
 	def __init__(self):
-		self.image = load_image('M3.png')
-		self.front_wheel = load_image('Wheel.png')
-		self.rear_wheel = load_image('Wheel.png')
+		self.image = load_image('./car/M3.png')
+		self.front_wheel = load_image('./car/Wheel.png')
+		self.rear_wheel = load_image('./car/Wheel.png')
 		self.weight = 1470 * 0.10197	# kg to Newton
 		self.diff_ratio = 3.62
 		self.aerodynamics = 0.32
@@ -43,9 +43,9 @@ class M3:
 
 class EK9:
 	def __init__(self):
-		self.image = load_image('EK9.png')
-		self.front_wheel = load_image('Wheel.png')
-		self.rear_wheel = load_image('Wheel.png')
+		self.image = load_image('./car/EK9.png')
+		self.front_wheel = load_image('./car/Wheel.png')
+		self.rear_wheel = load_image('./car/Wheel.png')
 		self.weight = 1073 * 0.10197	# kg to Newton
 		self.diff_ratio = 4.40
 		self.aerodynamics = 0.32
@@ -71,9 +71,9 @@ class EK9:
 
 class S4:
 	def __init__(self):
-		self.image = load_image('S4.png')
-		self.front_wheel = load_image('Wheel.png')
-		self.rear_wheel = load_image('Wheel.png')
+		self.image = load_image('./car/S4.png')
+		self.front_wheel = load_image('./car/Wheel.png')
+		self.rear_wheel = load_image('./car/Wheel.png')
 		self.weight = 1720 * 0.10197  # kg to Newton
 		self.diff_ratio = 3.54
 		self.aerodynamics = 0.28
@@ -100,9 +100,9 @@ class S4:
 
 class RX7:
 	def __init__(self):
-		self.image = load_image('RX7.png')
-		self.front_wheel = load_image('Wheel.png')
-		self.rear_wheel = load_image('Wheel.png')
+		self.image = load_image('./car/RX7.png')
+		self.front_wheel = load_image('./car/Wheel.png')
+		self.rear_wheel = load_image('./car/Wheel.png')
 		self.weight = 1310 * 0.10197  # kg to Newton
 		self.diff_ratio = 4.1
 		self.aerodynamics = 0.28
@@ -130,9 +130,9 @@ class RX7:
 
 class CLK:
 	def __init__(self):
-		self.image = load_image('CLK.png')
-		self.front_wheel = load_image('Wheel.png')
-		self.rear_wheel = load_image('Wheel.png')
+		self.image = load_image('./car/CLK.png')
+		self.front_wheel = load_image('./car/Wheel.png')
+		self.rear_wheel = load_image('./car/Wheel.png')
 		self.weight = 1310 * 0.10197  # kg to Newton
 		self.diff_ratio = 2.65
 		self.aerodynamics = 0.28
@@ -160,9 +160,9 @@ class CLK:
 
 class Murcielago:
 	def __init__(self):
-		self.image = load_image('Murcielago.png')
-		self.front_wheel = load_image('Wheel.png')
-		self.rear_wheel = load_image('Wheel.png')
+		self.image = load_image('./car/Murcielago.png')
+		self.front_wheel = load_image('./car/Wheel.png')
+		self.rear_wheel = load_image('./car/Wheel.png')
 		self.weight = 1841 * 0.10197  # kg to Newton
 		self.diff_ratio = 2.53
 		self.aerodynamics = 0.33
