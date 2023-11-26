@@ -14,13 +14,19 @@ from player import Player
 
 class Upgrader:
 	player = None
+	price = None
 	def __init__(self):
 		self.x, self.y = 400, 300
 		self.ui = load_image('./screen/UpgradeUI.png')
 		self.font = load_font('impact.TTF')
-		self.price = {'block': 1000, 'filter': 1000, 'exhaust': 1500, 'turbo': 3000, 'nitro': 5000}
+		if Upgrader.price is None:
+			Upgrader.price = {'block': 1000, 'filter': 1000, 'exhaust': 1000, 'turbo': 3000, 'nitro': 5000}
 		if Upgrader.player is None:
 			Upgrader.player = Player(car_types.M3)
+
+		self.player.money_usage = 0
+		self.level_diff = self.player.level.copy()
+		self.price_diff = Upgrader.price.copy()
 
 
 
@@ -32,39 +38,45 @@ class Upgrader:
 			if event.key == SDLK_1 and self.player.level['block'] <= 5:
 				if self.player.money >= self.price['block']:
 					self.player.level['block'] += 1
-					self.player.money -= self.price['block']
-					self.price['block'] += 500
+					self.player.money -= Upgrader.price['block']
+					self.player.money_usage += Upgrader.price['block']
+					Upgrader.price['block'] = 1000 + 500 * (self.player.level['block'] - 1)
 					self.player.car.sim.engine.max_rpm += 500
 				else:
 					game_framework.push_mode(warning_mode)
 			elif event.key == SDLK_2 and self.player.level['filter'] <= 5:
 				if self.player.money >= self.price['filter']:
 					self.player.level['filter'] += 1
-					self.player.money -= self.price['filter']
-					self.price['filter'] += 500
+					self.player.money -= Upgrader.price['filter']
+					self.player.money_usage += Upgrader.price['filter']
+					Upgrader.price['filter'] = 1000 + 500 * (self.player.level['filter'] - 1)
 					self.player.car.car_type.max_temp += 20
 				else:
 					game_framework.push_mode(warning_mode)
 			elif event.key == SDLK_3 and self.player.level['exhaust'] <= 5:
 				if self.player.money >= self.price['exhaust']:
 					self.player.level['exhaust'] += 1
-					self.player.money -= self.price['exhaust']
-					self.price['exhaust'] += 500
+					self.player.money -= Upgrader.price['exhaust']
+					self.player.money_usage += Upgrader.price['exhaust']
+					Upgrader.price['exhaust'] = 1000 + 500 * (self.player.level['exhaust'] - 1)
 					self.player.car.car_type.rpm_raise += 50
 				else:
 					game_framework.push_mode(warning_mode)
-			elif event.key == SDLK_4:
+			elif event.key == SDLK_4 and self.player.level['turbo'] is False:
 				if self.player.money >= self.price['turbo']:
 					self.player.level['turbo'] = True
-					self.player.money -= self.price['turbo']
+					self.player.money -= Upgrader.price['turbo']
+					self.player.money_usage += Upgrader.price['turbo']
+					Upgrader.price['turbo'] = 2500 + 500 * (self.player.level['turbo'] - 1)
 					self.player.car.sim.engine.max_rpm += 2500
 					self.player.car.car_type.rpm_raise += 250
 				else:
 					game_framework.push_mode(warning_mode)
-			elif event.key == SDLK_5:
+			elif event.key == SDLK_5 and self.player.level['nitro'] is False:
 				if self.player.money >= self.price['nitro']:
 					self.player.level['nitro'] = True
-					self.player.money -= self.price['nitro']
+					self.player.money -= Upgrader.price['nitro']
+					self.player.money_usage += Upgrader.price['nitro']
 					self.player.car.nitro = True
 				else:
 					game_framework.push_mode(warning_mode)
@@ -72,8 +84,9 @@ class Upgrader:
 
 	def draw(self):
 		self.ui.draw(self.x, self.y, 800, 600)
-		self.font.draw(400, 540, f'{self.player.money}', (255, 255, 255))
-		self.font.draw(500, 540, f"STAGE{play_mode.stage} PREPARATION", (255, 255, 255))
+		self.font.draw(400, 540, f'{self.player.money}$', (255, 255, 255))
+		self.font.draw(60, 500, f"STAGE{play_mode.stage} PREPARATION", (255, 255, 255))
+		self.font.draw(500, 540, f'Press SPACE to start stage{play_mode.stage} ->', (255, 255, 255))
 
 		self.font.draw(60, 130, f"""{self.price['block']}$""")
 		self.font.draw(215, 130, f"""{self.price['filter']}$""")

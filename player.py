@@ -10,6 +10,7 @@ class Player:
 		self.car = Car(car_type)
 		self.level = {'block':1, 'filter':1, 'exhaust':1, 'turbo':False, 'nitro':False}
 		self.money = 2000
+		self.money_usage = 0
 		self.state_show = load_font('ENCR10B.TTF', 16)
 		self.speedometer = speedometer.Speedometer(self)
 

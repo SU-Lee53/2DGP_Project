@@ -4,6 +4,7 @@ import play_mode
 from upgrader import Upgrader
 import game_world
 
+upgrade = None
 
 def handle_events():
 	events = get_events()
@@ -23,8 +24,6 @@ def init():
 	global upgrade
 	upgrade = Upgrader()
 	game_world.add_object(upgrade)
-
-
 
 def finish():
 	game_world.clear()

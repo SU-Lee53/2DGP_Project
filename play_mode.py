@@ -6,6 +6,7 @@ import result_mode
 import upgrade_mode
 from Strip import Strip
 from stage_info import stage_info
+from upgrader import Upgrader
 
 player = None
 strip = None
@@ -70,24 +71,34 @@ def update():
 	if player.car.sim.engine.rpm > player.car.sim.engine.max_rpm:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Engine Blow'
+		player.level = upgrade_mode.upgrade.level_diff.copy()
+		upgrade_mode.upgrade.price = upgrade_mode.upgrade.price_diff.copy()
 		player.money += reward // 5
+		player.money += player.money_usage
 		game_framework.change_mode(result_mode)
 
 	if player.car.sim.engine.temperature >= player.car.car_type.max_temp:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Engine Overheating'
+		player.level = upgrade_mode.upgrade.level_diff.copy()
+		upgrade_mode.upgrade.price = upgrade_mode.upgrade.price_diff.copy()
 		player.money += reward // 5
 		game_framework.change_mode(result_mode)
 
 	if player.car.move_distance > 5.0 and get_time() - start_time <= 3.0:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'False Start'
+		player.level = upgrade_mode.upgrade.level_diff.copy()
+		Upgrader.price = upgrade_mode.upgrade.price_diff.copy()
 		player.money += reward // 5
+		player.money += player.money_usage
 		game_framework.change_mode(result_mode)
 
 	if opponent.car.move_distance >= strip_length:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Opponent Win'
+		player.level = upgrade_mode.upgrade.level_diff.copy()
+		upgrade_mode.upgrade.price = upgrade_mode.upgrade.price_diff.copy()
 		player.money += reward // 5
 		game_framework.change_mode(result_mode)
 
