@@ -29,19 +29,8 @@ class Opponent:
 	def draw(self):
 		self.car.car_type.draw(self.car.x + (self.difference * PIXEL_PER_METER), self.car.y)
 
-		self.state_show.draw(0, 550, f'acc: {self.car.acc: .2f}', (0,0,0))
-		self.state_show.draw(200, 550, f'speed: {self.car.speed: .2f}', (0,0,0))
-		self.state_show.draw(400, 550, f'rpm: {self.car.sim.engine.rpm : .2f}', (0,0,0))
-		self.state_show.draw(600, 550, f'torque: {self.car.sim.engine.torque: .2f}', (0,0,0))
-		self.state_show.draw(000, 550-30, f'temp: {self.car.sim.engine.temperature: .2f}', (0,0,0))
-		self.state_show.draw(200, 550-30, f'distance: {self.car.move_distance: .2f}', (0,0,0))
-		self.state_show.draw(400, 550-30, f'wheel: {self.car.car_type.wheel_rotation: .2f}', (0,0,0))
-		self.state_show.draw(600, 550-30, f'gear: {self.car.sim.mission.gear: .2f}', (0,0,0))
-
-
-
 	def op_drive(self):
-		self.car.state_machine.cur_state = car.Drive
+		self.car.state_machine.cur_state = car.Gas
 		return BehaviorTree.RUNNING
 
 	def op_upshift(self):

@@ -13,6 +13,7 @@ start_time = None
 stage = 1
 opponent = None
 reward = None
+strip_length = None
 
 def handle_events():
 	events = get_events()
@@ -45,15 +46,15 @@ def init():
 
 	match stage:
 		case 1:
-			stage_info.stage1(opponent, reward)
+			stage_info.stage1()
 		case 2:
-			stage_info.stage2(opponent, reward)
+			stage_info.stage2()
 		case 3:
-			stage_info.stage3(opponent, reward)
+			stage_info.stage3()
 		case 4:
-			stage_info.stage4(opponent, reward)
+			stage_info.stage4()
 		case 5:
-			stage_info.stage5(opponent, reward)
+			stage_info.stage5()
 
 	game_world.add_object(opponent)
 
@@ -81,14 +82,16 @@ def update():
 		result_mode.fail_statement = 'False Start'
 		game_framework.change_mode(result_mode)
 
-	if opponent.car.move_distance >= 500:
+	if opponent.car.move_distance >= strip_length:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Opponent Win'
 		game_framework.change_mode(result_mode)
-	
-	if player.car.move_distance >= 500.0:
+
+	if player.car.move_distance >= strip_length:
+		global stage
 		result_mode.race_result = True
 		player.money += reward
+		stage += 1
 		game_framework.change_mode(result_mode)
 
 	game_world.update()

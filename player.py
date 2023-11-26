@@ -2,6 +2,8 @@ import game_world
 import game_framework
 from pico2d import *
 from car import Car
+import speedometer
+
 
 class Player:
 	def __init__(self, car_type):
@@ -9,15 +11,18 @@ class Player:
 		self.level = {'block':1, 'filter':1, 'exhaust':1, 'turbo':False, 'nitro':False}
 		self.money = 2000
 		self.state_show = load_font('ENCR10B.TTF', 16)
+		self.speedometer = speedometer.Speedometer(self)
 
 	def update(self):
 		self.car.update()
+		self.speedometer.update()
 
 	def handle_event(self, event):
 		self.car.handle_event(event)
 
 	def draw(self):
 		self.car.draw()
+		self.speedometer.draw()
 
 		self.state_show.draw(0, 10, f'acc: {self.car.acc: .2f}', (255,255,0))
 		self.state_show.draw(200, 10, f'speed: {self.car.speed: .2f}', (255,255,0))

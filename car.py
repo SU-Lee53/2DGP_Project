@@ -16,6 +16,10 @@ def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
 def space_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_SPACE
+def shift_down(e):
+	return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LSHIFT
+def shift_up(e):
+	return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LSHIFT
 
 
 class Idle:
@@ -35,7 +39,7 @@ class Idle:
 
 	@staticmethod
 	def do(car):
-		car.sim.engine.rpm -= 300 * car.sim.mission.ratio[car.sim.mission.gear] * game_framework.frame_time
+		car.sim.engine.rpm -= 1000 * car.sim.mission.ratio[car.sim.mission.gear] * game_framework.frame_time
 		car.sim.engine.rpm = max(car.sim.engine.rpm, 850)
 		if car.sim.engine.rpm >= car.sim.engine.max_rpm - 1000:
 			car.sim.engine.temperature += 10 * game_framework.frame_time
@@ -52,11 +56,10 @@ class Idle:
 	def draw(car):
 		car.car_type.draw(car.x, car.y)
 
-class Drive:
+class Gas:
 	@staticmethod
 	def enter(car, e):
 		print('drive')
-		pass
 
 	@staticmethod
 	def exit(car, e):
@@ -84,14 +87,46 @@ class Drive:
 	def draw(car):
 		car.car_type.draw(car.x, car.y)
 
+class Brake:
+	@staticmethod
+	def enter(car, e):
+		print('brake')
+
+	@staticmethod
+	def exit(car, e):
+		if up_down(e):
+			car.sim.gear_up()
+		elif down_down(e):
+			car.sim.gear_down()
+
+	@staticmethod
+	def do(car):
+		car.sim.engine.rpm -= 3000 * car.sim.mission.ratio[car.sim.mission.gear] * game_framework.frame_time
+		car.sim.engine.rpm = max(car.sim.engine.rpm, 850)
+		if car.sim.engine.rpm >= car.sim.engine.max_rpm - 1000:
+			car.sim.engine.temperature += 10 * game_framework.frame_time
+		else:
+			car.sim.engine.temperature -= 10 * game_framework.frame_time
+			car.sim.engine.temperature = max(car.sim.engine.temperature, 50)
+		car.prev_speed = car.speed
+		car.speed -= 50 * game_framework.frame_time
+		car.speed = max(car.speed, 0)
+		car.sim.eval_wheel_rotation()
+		car.move_distance += car.speed * game_framework.frame_time
+
+	@staticmethod
+	def draw(car):
+		car.car_type.draw(car.x, car.y)
+
 
 class StateMachine:
 	def __init__(self, car):
 		self.car = car
 		self.cur_state = Idle
 		self.transitions = {
-			Idle: {space_down: Drive, up_down: Idle, down_down: Idle },	# up_down시 변속
-			Drive: {space_up: Idle, up_down: Drive, down_down: Drive}
+			Idle: {space_down: Gas, shift_down: Brake, up_down: Idle, down_down: Idle},	# up_down시 변속
+			Gas: {space_up: Idle, shift_down: Brake, up_down: Gas, down_down: Gas},
+			Brake: {shift_up: Idle, up_down: Brake, down_down: Brake}
 		}
 
 	def start(self):

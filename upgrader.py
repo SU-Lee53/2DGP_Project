@@ -1,9 +1,16 @@
 import car_types
 import game_framework
 from pico2d import *
+
+import play_mode
 import warning_mode
 from player import Player
 
+# 엔진 블록: 최고속도 증가 -> 최대 RPM을 올려주면
+# 엔진 필터: 엔진 내구성 증가 -> 더 높은 열에도 버티고 냉각성능이 올라감
+# 배기 : 가속도 증가
+# 터보 : 최고속도, 가속도 큰폭으로 증가
+# 니트로 : 말그대로 니트로
 
 class Upgrader:
 	player = None
@@ -60,7 +67,7 @@ class Upgrader:
 	def draw(self):
 		self.ui.draw(self.x, self.y, 800, 600)
 		self.font.draw(400, 540, f'{self.player.money}', (255, 255, 255))
-		self.font.draw(500, 540, "STAGE PREPARATION", (255, 255, 255))
+		self.font.draw(500, 540, f"STAGE{play_mode.stage} PREPARATION", (255, 255, 255))
 
 		self.font.draw(60, 130, f"""{self.price['block']}$""")
 		self.font.draw(215, 130, f"""{self.price['filter']}$""")

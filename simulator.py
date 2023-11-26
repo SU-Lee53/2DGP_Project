@@ -61,15 +61,14 @@ class Simulator:
 			self.car.speed += self.car.acc * game_framework.frame_time
 
 	def eval_wheel_rotation(self):
-		if self.car.prev_speed != 0.0 and self.car.state_machine.cur_state == car.Drive:
+		if self.car.prev_speed != 0.0 and self.car.state_machine.cur_state == car.Gas:
 			self.car.car_type.wheel_rotation += (self.car.speed * game_framework.frame_time) / (self.car.car_type.wheel_radius)
 			# self.car_type.wheel_rotation = (self.move_distance * (2 * 3.141592) / self.car_type.wheel_radius**2 * 3.142592) * (self.speed / self.prev_speed)
 		elif self.car.prev_speed != 0.0 and self.car.state_machine.cur_state == car.Idle:
 			self.car.car_type.wheel_rotation -= (self.car.speed * game_framework.frame_time) / (self.car.car_type.wheel_radius)
 		elif self.car.prev_speed == 0.0:
 			self.car.car_type.wheel_rotation = 0.0
-	def get_pps(self):
-		self.SPEED_PER_PPS = ((self.car.speed * 1000 / 60.0) / 60.0) * PIXEL_PER_METER
+
 
 	def reset(self):
 		self.engine.rpm = 800
