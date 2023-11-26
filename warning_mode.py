@@ -1,7 +1,9 @@
 from pico2d import *
 import game_framework
-from upgrader import Upgrader
 import game_world
+import play_mode
+from pannel import Pannel
+
 
 
 def handle_events():
@@ -10,32 +12,29 @@ def handle_events():
 		if event.type == SDL_QUIT:
 			game_framework.quit()
 		elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-			game_framework.quit()
-		else:
-			upgrade.handle_event(event)
-
+			game_framework.pop_mode()
+		elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+			game_framework.pop_mode()
 
 
 def init():
-	global upgrade
-	upgrade = Upgrader()
-	game_world.add_object(upgrade)
-
-
-
-def finish():
-	game_world.clear()
-	pass
+	global pannel
+	pannel = Pannel()
+	game_world.add_object(pannel, 3)
 
 
 def update():
-	pass
+	game_world.update()
 
 
 def draw():
 	clear_canvas()
 	game_world.render()
 	update_canvas()
+
+
+def finish():
+	game_world.remove_object(pannel)
 
 
 def pause():

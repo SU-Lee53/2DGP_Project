@@ -13,13 +13,13 @@ ANIM_MOVE_PER_ACTION = 100
 
 
 class Strip:
-	def __init__(self, car):
+	def __init__(self):
 		self.strip = load_image('Strip.png')
 		self.crowd = load_image('Crowd.png')
 		self.animation = load_image('Run_Animation.png')
 		self.crowd_frame = 0
 		self.anim_frame = 0
-		self.player = car				# 프레임 움직임의 기준이 되는 속도를 플레이어의 자동차가 갖고있음.
+		self.player = play_mode.player.car				# 프레임 움직임의 기준이 되는 속도를 플레이어의 자동차가 갖고있음.
 		self.start_line = load_image('Start_Line.png')
 		self.start_sign = None
 

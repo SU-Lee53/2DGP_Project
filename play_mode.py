@@ -7,6 +7,7 @@ import upgrade_mode
 from Strip import Strip
 from car import Car
 import car_types
+from player import Player
 
 player = None
 strip = None
@@ -33,10 +34,10 @@ def init():
 
 	start_time = get_time()
 
-	player = Car(car_types.M3)
+	player = Player(car_types.M3)
 	game_world.add_object(player, 1)
 
-	strip = Strip(player)
+	strip = Strip()
 	game_world.add_object(strip, 0)
 
 	reward = 2000
@@ -48,22 +49,22 @@ def finish():
 
 
 def update():
-	if player.sim.engine.rpm > player.sim.engine.max_rpm:
+	if player.car.sim.engine.rpm > player.car.sim.engine.max_rpm:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Engine Blow'
 		game_framework.change_mode(result_mode)
 
-	if player.sim.engine.temperature >= 100:
+	if player.car.sim.engine.temperature >= 100:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'Engine Overheating'
 		game_framework.change_mode(result_mode)
 
-	if player.move_distance > 5.0 and get_time() - start_time <= 3.0:
+	if player.car.move_distance > 5.0 and get_time() - start_time <= 3.0:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'False Start'
 		game_framework.change_mode(result_mode)
 
-	if player.move_distance >= 500.0:
+	if player.car.move_distance >= 500.0:
 		result_mode.race_result = True
 		game_framework.change_mode(result_mode)
 

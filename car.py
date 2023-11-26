@@ -120,8 +120,6 @@ class Car:
 	def __init__(self, type, x = 150, y = 90):
 		self.x, self.y = x, y
 		self.car_type = type()
-		self.level = {'block':1, 'filter':1, 'exhaust':1, 'turbo':False, 'nitro':False}
-		self.money = 2000
 		self.speed = 0.0
 		self.prev_speed = 0.0			# 이전 프레임에서의 속도 -> 바퀴 회전수를 구하기 위함
 		self.acc = 0.0
