@@ -69,6 +69,7 @@ class Gas:
 	def exit(car, e):
 		if up_down(e):
 			car.sim.gear_up()
+			car.turbo_sound.play()
 		elif down_down(e):
 			car.sim.gear_down()
 
@@ -102,15 +103,16 @@ class Nitro:
 	def exit(car, e):
 		if up_down(e):
 			car.sim.gear_up()
+			car.turbo_sound.play()
 		elif down_down(e):
 			car.sim.gear_down()
 
 	@staticmethod
 	def do(car):
-		car.sim.engine.rpm += car.car_type.rpm_raise * 1.5 * car.sim.mission.ratio[car.sim.mission.gear] * game_framework.frame_time							# 차량 업그레이드시 이 rpm 가중치를 올려주면 좋을듯함
+		car.sim.engine.rpm += car.car_type.rpm_raise * 3.0 * car.sim.mission.ratio[car.sim.mission.gear] * game_framework.frame_time							# 차량 업그레이드시 이 rpm 가중치를 올려주면 좋을듯함
 		car.sim.engine.rpm = min(car.sim.engine.rpm, car.sim.engine.max_rpm)
 		if car.sim.engine.rpm >= car.sim.engine.max_rpm - 1000:
-			car.sim.engine.temperature += 20 * game_framework.frame_time
+			car.sim.engine.temperature += 30 * game_framework.frame_time
 		else:
 			car.sim.engine.temperature -= 10 * game_framework.frame_time
 			car.sim.engine.temperature = max(car.sim.engine.temperature, 50)
@@ -200,6 +202,8 @@ class Car:
 		self.move_distance = 0.0
 		self.nitro = False
 		self.nitro_gage = 100
+		self.turbo_sound = load_wav('turbo.wav')
+		self.turbo_sound.set_volume(20)
 
 		self.sim = Simulator(self)
 		self.state_machine = StateMachine(self)

@@ -59,6 +59,9 @@ def init():
 
 	game_world.add_object(opponent)
 
+	# car_sound = load_wav('car_start.wav')
+	# car_sound.set_volume(15)
+	# car_sound.play()
 
 
 

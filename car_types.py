@@ -61,7 +61,7 @@ class EK9:
 		self.diff_ratio = 4.40
 		self.aerodynamics = 0.32
 		self.frontal_area = 2.09
-		self.rpm_raise = 1000
+		self.rpm_raise = 700
 		self.ratio = (0.0, 3.23, 2.105, 1.458, 1.107, 1.0, 0.83)
 		self.max_gear = 4
 		self.max_rpm = 9000
@@ -92,7 +92,7 @@ class S4:
 		self.diff_ratio = 3.54
 		self.aerodynamics = 0.28
 		self.frontal_area = 2.49
-		self.rpm_raise = 800
+		self.rpm_raise = 700
 		self.ratio = (0.0, 3.67, 2.05, 1.46, 1.13, 0.87, 0.69)
 		self.max_gear = 6
 		self.max_rpm = 7000
@@ -124,7 +124,7 @@ class RX7:
 		self.diff_ratio = 4.1
 		self.aerodynamics = 0.28
 		self.frontal_area = 2.49
-		self.rpm_raise = 800
+		self.rpm_raise = 300
 		self.ratio = (0.0, 3.48, 2.01, 1.39, 1.00, 0.72, 0.69)
 		self.max_gear = 5
 		self.max_rpm = 6500

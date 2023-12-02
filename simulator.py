@@ -35,6 +35,7 @@ class Simulator:
 		self.mission.gear += 1
 		self.engine.rpm = self.engine.rpm * (self.mission.ratio[self.mission.gear] / self.mission.ratio[self.mission.gear - 1])
 		print('current gear:', self.mission.gear)
+
 		return True
 
 	def gear_down(self):

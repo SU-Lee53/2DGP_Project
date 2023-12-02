@@ -17,7 +17,7 @@ class Upgrader:
 	price = None
 	def __init__(self):
 		self.x, self.y = 400, 300
-		self.ui = load_image('./screen/UpgradeUI.png')
+		self.ui = load_image('./screen/upgradeui2.png')
 		self.font = load_font('impact.TTF')
 		if Upgrader.price is None:
 			Upgrader.price = {'block': 1000, 'filter': 1000, 'exhaust': 1000, 'turbo': 3000, 'nitro': 5000}
@@ -27,7 +27,9 @@ class Upgrader:
 		self.player.money_usage = 0
 		self.level_diff = self.player.level.copy()
 		self.price_diff = Upgrader.price.copy()
-
+		self.bgm = load_music('background.mp3')
+		self.bgm.set_volume(32)
+		self.bgm.play()
 
 
 	def update(self):
@@ -41,7 +43,7 @@ class Upgrader:
 					self.player.money -= Upgrader.price['block']
 					self.player.money_usage += Upgrader.price['block']
 					Upgrader.price['block'] = 1000 + 500 * (self.player.level['block'] - 1)
-					self.player.car.sim.engine.max_rpm += 500
+					self.player.car.sim.engine.max_rpm += 700
 				else:
 					game_framework.push_mode(warning_mode)
 			elif event.key == SDLK_2 and self.player.level['filter'] <= 5:
@@ -59,7 +61,7 @@ class Upgrader:
 					self.player.money -= Upgrader.price['exhaust']
 					self.player.money_usage += Upgrader.price['exhaust']
 					Upgrader.price['exhaust'] = 1000 + 500 * (self.player.level['exhaust'] - 1)
-					self.player.car.car_type.rpm_raise += 50
+					self.player.car.car_type.rpm_raise -= 80
 				else:
 					game_framework.push_mode(warning_mode)
 			elif event.key == SDLK_4 and self.player.level['turbo'] is False:
@@ -69,7 +71,7 @@ class Upgrader:
 					self.player.money_usage += Upgrader.price['turbo']
 					Upgrader.price['turbo'] = 2500 + 500 * (self.player.level['turbo'] - 1)
 					self.player.car.sim.engine.max_rpm += 2500
-					self.player.car.car_type.rpm_raise += 250
+					self.player.car.car_type.rpm_raise -= 150
 				else:
 					game_framework.push_mode(warning_mode)
 			elif event.key == SDLK_5 and self.player.level['nitro'] is False:
