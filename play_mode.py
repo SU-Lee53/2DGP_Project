@@ -3,6 +3,7 @@ import game_framework
 
 import game_world
 import result_mode
+import complete_mode
 import upgrade_mode
 from Strip import Strip
 from stage_info import stage_info
@@ -11,7 +12,7 @@ from upgrader import Upgrader
 player = None
 strip = None
 start_time = None
-stage = 1
+stage = 5
 opponent = None
 reward = None
 strip_length = None
@@ -66,6 +67,7 @@ def init():
 
 
 def finish():
+	strip.bgm.stop()
 	game_world.clear()
 	pass
 
@@ -107,10 +109,13 @@ def update():
 
 	if player.car.move_distance >= strip_length:
 		global stage
-		result_mode.race_result = True
-		player.money += reward
-		stage += 1
-		game_framework.change_mode(result_mode)
+		if stage >= 5:
+			game_framework.change_mode(complete_mode)
+		else:
+			result_mode.race_result = True
+			player.money += reward
+			stage += 1
+			game_framework.change_mode(result_mode)
 
 	game_world.update()
 	game_world.handle_collisions()

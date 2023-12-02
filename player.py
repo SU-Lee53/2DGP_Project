@@ -9,7 +9,7 @@ class Player:
 	def __init__(self, car_type):
 		self.car = Car(car_type)
 		self.level = {'block':1, 'filter':1, 'exhaust':1, 'turbo':True, 'nitro':False}
-		self.money = 2000
+		self.money = 8000
 		self.money_usage = 0
 		self.state_show = load_font('ENCR10B.TTF', 16)
 		self.speedometer = speedometer.Speedometer(self)

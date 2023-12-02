@@ -189,7 +189,7 @@ class Murcielago:
 		self.diff_ratio = 2.53
 		self.aerodynamics = 0.33
 		self.frontal_area = 2.53
-		self.rpm_raise = 600
+		self.rpm_raise = 300
 		self.ratio = (0.0, 3.09, 2.10, 1.56, 1.24, 1.06, 0.93)
 		self.max_gear = 6
 		self.max_rpm = 8000
