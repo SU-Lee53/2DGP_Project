@@ -11,7 +11,7 @@ class Speedometer:
 		self.nitrometer = load_image('./car/nitrometer.png')
 		self.red_gage = load_image('./shapes/red_gage.png')
 		self.green_gage = load_image('./shapes/green_gage.png')
-		self.font = load_font('DS-DIGIT.TTF')
+		self.font = load_font('./font/DS-DIGIT.TTF')
 		self.rpm_gage = self.green_gage
 		self.temp_gage = self.green_gage
 		self.nitro_gage = self.green_gage

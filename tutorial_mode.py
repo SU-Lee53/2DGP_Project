@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import game_world
+import upgrade_mode
 
 upgrade = None
 
@@ -11,17 +12,16 @@ def handle_events():
 			game_framework.quit()
 		elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
 			game_framework.quit()
+		elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+			game_framework.change_mode(upgrade_mode)
 
 
 
 
 def init():
 	global screen
-	screen = load_image('./screen/Complete_Screen.png')
+	screen = load_image('./screen/Tutorial_Screen.png')
 
-	bgm = load_music('./sound/background.mp3')
-	bgm.set_volume(32)
-	bgm.play()
 def finish():
 	pass
 

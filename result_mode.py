@@ -21,7 +21,7 @@ def init():
 	else:
 		image = load_image('./screen/Lose_Screen.png')
 
-	statement = load_font('impact.TTF', 30)
+	statement = load_font('./font/impact.TTF', 30)
 
 def finish():
 	global image

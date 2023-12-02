@@ -202,7 +202,10 @@ class Car:
 		self.move_distance = 0.0
 		self.nitro = False
 		self.nitro_gage = 100
-		self.turbo_sound = load_wav('turbo.wav')
+		self.nitro_sound = load_wav('./sound/nitro_sound.wav')
+		self.nitro_sound.set_volume(20)
+
+		self.turbo_sound = load_wav('./sound/turbo.wav')
 		self.turbo_sound.set_volume(20)
 
 		self.sim = Simulator(self)

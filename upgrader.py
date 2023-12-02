@@ -18,7 +18,7 @@ class Upgrader:
 	def __init__(self):
 		self.x, self.y = 400, 300
 		self.ui = load_image('./screen/upgradeui2.png')
-		self.font = load_font('impact.TTF')
+		self.font = load_font('./font/impact.TTF')
 		if Upgrader.price is None:
 			Upgrader.price = {'block': 1000, 'filter': 1000, 'exhaust': 1000, 'turbo': 3000, 'nitro': 5000}
 		if Upgrader.player is None:
@@ -27,7 +27,7 @@ class Upgrader:
 		self.player.money_usage = 0
 		self.level_diff = self.player.level.copy()
 		self.price_diff = Upgrader.price.copy()
-		self.bgm = load_music('background.mp3')
+		self.bgm = load_music('./sound/background.mp3')
 		self.bgm.set_volume(32)
 		self.bgm.play()
 

@@ -92,7 +92,7 @@ class S4:
 		self.diff_ratio = 3.54
 		self.aerodynamics = 0.28
 		self.frontal_area = 2.49
-		self.rpm_raise = 700
+		self.rpm_raise = 600
 		self.ratio = (0.0, 3.67, 2.05, 1.46, 1.13, 0.87, 0.69)
 		self.max_gear = 6
 		self.max_rpm = 7000

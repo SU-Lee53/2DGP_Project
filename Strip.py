@@ -22,10 +22,10 @@ class Strip:
 		self.player = play_mode.player.car				# 프레임 움직임의 기준이 되는 속도를 플레이어의 자동차가 갖고있음.
 		self.start_line = load_image('./env/Start_Line.png')
 		self.start_sign = None
-		self.bgm = load_music('crowd.mp3')
+		self.bgm = load_music('./sound/crowd.mp3')
 		self.bgm.set_volume(10)
 		self.bgm.repeat_play()
-		self.start_sound = load_wav('start_sound.wav')
+		self.start_sound = load_wav('./sound/start_sound.wav')
 		self.start_sound.set_volume(10)
 		self.start_sound.play()
 

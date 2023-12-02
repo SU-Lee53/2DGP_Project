@@ -17,7 +17,7 @@ class Opponent:
 		self.difference = 0.0
 		self.car.state_machine.cur_state = car.Idle
 		self.upshift_param = self.op_get_upshift_param()
-		self.state_show = load_font('ENCR10B.TTF', 16)
+		self.state_show = load_font('./font/ENCR10B.TTF', 16)
 		self.build_behavior_tree()
 
 	def update(self):

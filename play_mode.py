@@ -12,7 +12,7 @@ from upgrader import Upgrader
 player = None
 strip = None
 start_time = None
-stage = 5
+stage = 1
 opponent = None
 reward = None
 strip_length = None
@@ -88,9 +88,10 @@ def update():
 		player.level = upgrade_mode.upgrade.level_diff.copy()
 		upgrade_mode.upgrade.price = upgrade_mode.upgrade.price_diff.copy()
 		player.money += reward // 5
+		player.money += player.money_usage
 		game_framework.change_mode(result_mode)
 
-	if player.car.move_distance > 5.0 and get_time() - start_time <= 3.0:
+	if player.car.move_distance > 3.0 and get_time() - start_time <= 3.0:
 		result_mode.race_result = False
 		result_mode.fail_statement = 'False Start'
 		player.level = upgrade_mode.upgrade.level_diff.copy()
@@ -105,6 +106,7 @@ def update():
 		player.level = upgrade_mode.upgrade.level_diff.copy()
 		upgrade_mode.upgrade.price = upgrade_mode.upgrade.price_diff.copy()
 		player.money += reward // 5
+		player.money += player.money_usage
 		game_framework.change_mode(result_mode)
 
 	if player.car.move_distance >= strip_length:
