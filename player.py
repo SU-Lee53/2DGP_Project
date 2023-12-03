@@ -9,7 +9,7 @@ class Player:
 	def __init__(self, car_type):
 		self.car = Car(car_type)
 		self.level = {'block':1, 'filter':1, 'exhaust':1, 'turbo':False, 'nitro':False}
-		self.money = 2000
+		self.money = 9000
 		self.money_usage = 0
 		self.state_show = load_font('./font/ENCR10B.TTF', 16)
 		self.speedometer = speedometer.Speedometer(self)
@@ -45,4 +45,5 @@ class Player:
 		self.car.prev_speed = 0.0
 		self.car.acc = 0.0
 		self.car.move_distance = 0.0
+		self.car.nitro_gage = 100
 		self.car.sim.reset()
