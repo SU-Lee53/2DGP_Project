@@ -114,7 +114,7 @@ class Nitro:
 		if car.sim.engine.rpm >= car.sim.engine.max_rpm - 1000:
 			car.sim.engine.temperature += 30 * game_framework.frame_time
 		else:
-			car.sim.engine.temperature -= 10 * game_framework.frame_time
+			car.sim.engine.temperature -= 30 * game_framework.frame_time
 			car.sim.engine.temperature = max(car.sim.engine.temperature, 50)
 		car.sim.get_torque()
 		car.prev_speed = car.speed
@@ -168,9 +168,9 @@ class StateMachine:
 		self.cur_state = Idle
 		self.transitions = {
 			Idle: {space_down: Gas, shift_down: Brake, up_down: Idle, down_down: Idle},	# up_down시 변속
-			Gas: {space_up: Idle, shift_down: Brake, ctrl_down: Nitro, up_down: Gas, down_down: Gas},
+			Gas: {space_up: Idle, ctrl_down: Brake, shift_down: Nitro, up_down: Gas, down_down: Gas},
 			Brake: {shift_up: Idle, up_down: Brake, down_down: Brake},
-			Nitro: {ctrl_up: Gas, shift_up: Idle, up_down: Nitro, down_down: Nitro}
+			Nitro: {shift_up: Gas, ctrl_up: Idle, up_down: Nitro, down_down: Nitro}
 		}
 
 	def start(self):
